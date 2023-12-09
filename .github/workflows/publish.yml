@@ -1,0 +1,39 @@
+name: publish
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pages: write
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        submodules: true
+
+    - name: Init
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: latest
+        extended: true
+
+    - name: Build
+      run: hugo --cleanDestinationDir -e production --minify
+
+    - name: Upload
+      uses: actions/upload-pages-artifact@v1
+      with:
+        name: github-pages
+        path: ./public
+        retention-days: 1
+
+    - name: Publish
+      uses: actions/deploy-pages@v2

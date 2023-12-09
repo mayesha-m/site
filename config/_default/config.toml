@@ -1,0 +1,12 @@
+baseURL = '/site/'
+languageCode = 'bn-bd'
+title = 'Example site'
+paginate = "10"
+
+theme = "github.com/Mitrichius/hugo-theme-anubis"
+
+[outputs]
+  home = ["HTML", "RSS", "MANIFEST"]
+
+[permalinks]
+"post" = '/:year/:month/:day/:slug/'
